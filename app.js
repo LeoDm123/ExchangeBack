@@ -18,7 +18,8 @@ dbConnection();
 
 //conectamos nuestras rutas con el archivo raiz en este ejemplo "/auth" va a ser que todos las funciones que se encuentren en "./routes/auth" va a ser que tengan por implicito la ruta /auth
 app.use("/auth", require("./src/routes/auth"));
-app.use("/menu", require("./src/routes/menu"));
+app.use("/cap", require("./src/routes/cap"));
+app.use("/op", require("./src/routes/op"));
 
 //definimos el puerto en donde vamos a estar trabajando
 app.listen(process.env.PORT, () => {
