@@ -1,4 +1,5 @@
 const Divisas = require("../models/divisas-model");
+const DivisasOps = require("../models/divisasOp-model");
 const Movimientos = require("../models/movimiento-model");
 
 const ingresarCapital = async (req, res) => {
@@ -156,6 +157,52 @@ const obtenerDivisas = async (req, res) => {
   }
 };
 
+const obtenerDivisasOps = async (req, res) => {
+  try {
+    // Fetch the current currency document from the database
+    const divisasOps = await DivisasOps.findOne();
+
+    if (!divisasOps) {
+      return res.status(404).json({ message: "Currency data not found" });
+    }
+
+    // Extract the currency amounts from the retrieved document
+    const { Pesos, Dolares, Euros } = divisasOps;
+
+    return res.status(200).json({
+      Pesos: Pesos || 0,
+      Dolares: Dolares || 0,
+      Euros: Euros || 0,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const resetDivisasOps = async (req, res) => {
+  try {
+    const divisasOps = await DivisasOps.findOne();
+
+    if (!divisasOps) {
+      return res.status(404).json({ message: "Currency data not found" });
+    }
+
+    divisasOps.Pesos = 0;
+    divisasOps.Dolares = 0;
+    divisasOps.Euros = 0;
+
+    await divisasOps.save();
+
+    return res.status(200).json({
+      message: "Currency data updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const obtenerMovimientos = async (req, res) => {
   try {
     // Fetch all currency documents from the database
@@ -211,6 +258,8 @@ const EditCap = async (req, res) => {
 module.exports = {
   ingresarCapital,
   obtenerDivisas,
+  obtenerDivisasOps,
+  resetDivisasOps,
   movimientoCapital,
   obtenerMovimientos,
   EditCap,
