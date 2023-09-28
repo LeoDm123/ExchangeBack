@@ -255,6 +255,41 @@ const EditCap = async (req, res) => {
   }
 };
 
+const EditMovimiento = async (req, res) => {
+  try {
+    const MovimientoId = req.params.id;
+    const updatedMovimientosData = req.body;
+
+    const updatedMovimiento = await Movimientos.findByIdAndUpdate(
+      movimientoId,
+      updatedMovimientoData,
+      { new: true }
+    );
+
+    res.json(updatedMovimiento);
+  } catch (error) {
+    console.error("Error al editar la operación:", error);
+    res.status(500).json({ error: "Error al editar la operación" });
+  }
+};
+
+const DeleteMov = async (req, res) => {
+  try {
+    const deletedMovimiento = await Movimientos.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!deletedMovimiento) {
+      return res.status(404).json({ message: "Operation not found" });
+    }
+
+    return res.status(200).json({ message: "Operation deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   ingresarCapital,
   obtenerDivisas,
@@ -263,4 +298,6 @@ module.exports = {
   movimientoCapital,
   obtenerMovimientos,
   EditCap,
+  EditMovimiento,
+  DeleteMov,
 };

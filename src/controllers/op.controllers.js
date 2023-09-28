@@ -264,14 +264,13 @@ const EditOp = async (req, res) => {
     const operationId = req.params.id;
     const updatedOperationData = req.body;
 
-    // Buscar la operación por su ID y actualizarla con los nuevos datos
     const updatedOperation = await Operaciones.findByIdAndUpdate(
       operationId,
       updatedOperationData,
-      { new: true } // Esto devuelve la operación actualizada
+      { new: true }
     );
 
-    res.json(updatedOperation); // Devuelve la operación actualizada como respuesta
+    res.json(updatedOperation);
   } catch (error) {
     console.error("Error al editar la operación:", error);
     res.status(500).json({ error: "Error al editar la operación" });
