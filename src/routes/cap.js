@@ -21,6 +21,6 @@ routerCap.post("/movimientoCapital", movimientoCapital);
 routerCap.get("/obtenerMovimientos", obtenerMovimientos);
 routerCap.put("/EditCap", EditCap);
 routerCap.put("/EditMovimiento", EditMovimiento);
-routerCap.put("/DeleteMov", DeleteMov);
+routerCap.delete("/DeleteMov", DeleteMov);
 
 module.exports = routerCap;

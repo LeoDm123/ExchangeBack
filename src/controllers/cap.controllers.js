@@ -257,8 +257,8 @@ const EditCap = async (req, res) => {
 
 const EditMovimiento = async (req, res) => {
   try {
-    const MovimientoId = req.params.id;
-    const updatedMovimientosData = req.body;
+    const movimientoId = req.params.id;
+    const updatedMovimientoData = req.body;
 
     const updatedMovimiento = await Movimientos.findByIdAndUpdate(
       movimientoId,
