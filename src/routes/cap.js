@@ -20,7 +20,7 @@ routerCap.put("/resetDivisasOps", resetDivisasOps);
 routerCap.post("/movimientoCapital", movimientoCapital);
 routerCap.get("/obtenerMovimientos", obtenerMovimientos);
 routerCap.put("/EditCap", EditCap);
-routerCap.put("/EditMovimiento", EditMovimiento);
-routerCap.delete("/DeleteMov", DeleteMov);
+routerCap.put("/EditMovimiento/:id", EditMovimiento);
+routerCap.delete("/DeleteMov/:id", DeleteMov);
 
 module.exports = routerCap;
