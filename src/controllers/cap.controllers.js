@@ -53,15 +53,25 @@ const movimientoCapital = async (req, res) => {
 
     let updatedMonto = Monto; // The amount to be added or subtracted
 
-    if (Detalle === "Retiro" || Detalle === "Devolucion") {
+    if (
+      Detalle === "Retiro Cap." ||
+      Detalle === "Devolucion" ||
+      Detalle === "Gasto Op."
+    ) {
       // For "Retiro" detail, subtract the Monto
       updatedMonto = -Monto;
-    } else if (Detalle === "Ingreso" || Detalle === "Prestamo") {
+    } else if (
+      Detalle === "Ingreso Cap." ||
+      Detalle === "Prestamo" ||
+      Detalle === "Ingreso Op."
+    ) {
       updatedMonto = Monto;
     } else if (
-      Detalle !== "Ingreso" ||
+      Detalle !== "Retiro Cap." ||
       Detalle !== "Devolucion" ||
-      Detalle !== "Retiro" ||
+      Detalle !== "Gasto Op." ||
+      Detalle !== "Ingreso Cap." ||
+      Detalle !== "Ingreso Op." ||
       Detalle !== "Prestamo"
     ) {
       return res.status(400).json({ message: "Invalid detail specified" });
