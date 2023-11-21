@@ -3,14 +3,12 @@ const DivisasOps = require("../models/divisasOp-model");
 const Movimientos = require("../models/movimiento-model");
 
 const ingresarCapital = async (req, res) => {
-  const { moneda, monto } = req.body; // Assuming you also have a "moneda" field in the request body
+  const { moneda, monto } = req.body;
 
   try {
-    // Fetch the current currency document from the database
     let divisas = await Divisas.findOne();
 
     if (!divisas) {
-      // If no document exists, create a new one
       divisas = new Divisas();
     }
 
@@ -18,7 +16,6 @@ const ingresarCapital = async (req, res) => {
     divisas.Pesos = divisas.Pesos || 0;
     divisas.Dolares = divisas.Dolares || 0;
 
-    // Update the specific currency value based on the provided "moneda"
     if (moneda === "USD") {
       divisas.Dolares = (divisas.Dolares || 0) + monto;
     } else if (moneda === "ARS") {
@@ -29,7 +26,6 @@ const ingresarCapital = async (req, res) => {
       return res.status(400).json({ message: "Invalid currency specified" });
     }
 
-    // Save the updated document
     await divisas.save();
 
     return res
@@ -51,14 +47,13 @@ const movimientoCapital = async (req, res) => {
       return res.status(404).json({ message: "Currency data not found" });
     }
 
-    let updatedMonto = Monto; // The amount to be added or subtracted
+    let updatedMonto = Monto;
 
     if (
       Detalle === "Retiro Cap." ||
       Detalle === "Devolucion" ||
       Detalle === "Gasto Op."
     ) {
-      // For "Retiro" detail, subtract the Monto
       updatedMonto = -Monto;
     } else if (
       Detalle === "Ingreso Cap." ||

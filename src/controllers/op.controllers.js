@@ -9,19 +9,10 @@ const Operacion = async (req, res) => {
       Divisa,
       Monto,
       TipoCambio,
-      Estado,
       MontoTotal,
       Comentarios,
       Email,
     } = req.body;
-
-    const SwAlert = () => {
-      swal({
-        title: "¡Error!",
-        text: "Fondos Insuficientes",
-        icon: "error",
-      });
-    };
 
     const divisas = await Divisas.findOne();
     let divisasOp = await DivisasOp.findOne();
@@ -59,9 +50,9 @@ const Operacion = async (req, res) => {
       Detalle,
       Divisa,
       Monto,
-      Comentarios,
       TipoCambio,
       MontoTotal,
+      Comentarios,
       Email,
       Estado: "Activa",
       Fecha: new Date().toLocaleString("en-US", {
@@ -99,6 +90,54 @@ const Operacion = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const OperacionList = async (req, res) => {
+  try {
+    const {
+      Detalle,
+      Divisa,
+      Monto,
+      TipoCambio,
+      MontoTotal,
+      Comentarios,
+      Email,
+    } = req.body;
+
+    const newOperacion = new Operaciones({
+      Detalle,
+      Divisa,
+      Monto,
+      TipoCambio,
+      MontoTotal,
+      Comentarios,
+      Email,
+      Estado: "Realizada",
+      Fecha: new Date().toLocaleString("en-US", {
+        timeZone: "America/Argentina/Buenos_Aires",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }),
+    });
+
+    try {
+      await newOperacion.save();
+
+      return res
+        .status(201)
+        .json({ message: "Operación guardada exitosamente" });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Error interno del servidor" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
 
@@ -279,6 +318,7 @@ const EditOp = async (req, res) => {
 
 module.exports = {
   Operacion,
+  OperacionList,
   obtenerOperaciones,
   AcceptOp,
   CancelOp,

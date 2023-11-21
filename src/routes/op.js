@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   Operacion,
+  OperacionList,
   obtenerOperaciones,
   AcceptOp,
   CancelOp,
@@ -12,6 +13,7 @@ const {
 const routerOp = express.Router();
 
 routerOp.post("/Operacion", Operacion);
+routerOp.post("/OperacionList", OperacionList);
 routerOp.get("/obtenerOperaciones", obtenerOperaciones);
 routerOp.post("/AcceptOp", AcceptOp);
 routerOp.post("/CancelOp", CancelOp);

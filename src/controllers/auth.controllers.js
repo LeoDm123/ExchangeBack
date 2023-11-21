@@ -5,7 +5,6 @@ const crearUsuario = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    //validar si el email del usuario existe en la base de datos
     let usuario = await Usuarios.findOne({ email });
     console.log(usuario);
 

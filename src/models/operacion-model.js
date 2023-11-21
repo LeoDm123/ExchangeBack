@@ -13,6 +13,10 @@ const OperacionesSchema = Schema({
     type: Number,
     required: true,
   },
+  TipoCambio: {
+    type: Number,
+    required: true,
+  },
   MontoTotal: {
     type: Number,
     required: true,
@@ -20,17 +24,13 @@ const OperacionesSchema = Schema({
   Comentarios: {
     type: String,
   },
-  Fecha: {
+  Email: {
     type: String,
-  },
-  TipoCambio: {
-    type: Number,
-    required: true,
   },
   Estado: {
     type: String,
   },
-  Email: {
+  Fecha: {
     type: String,
   },
 });
